@@ -1,0 +1,41 @@
+{% load static %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+        <title>
+            {% block title %} Homepage {% endblock %}
+        </title>
+    </head>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://static.line-scdn.net/liff/edge/versions/2.9.0/sdk.js"></script>
+        <script>
+            liff.init({ liffId: "1657196715-wb3NDYPR" }, () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }else{
+                    liff.getProfile().then(profile => {
+                        console.log(`User ID: ${profile.userId}`);
+                        console.log(`User ID: ${profile.displayName}`);
+                        document.getElementById("image").src = profile.pictureUrl;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }
+            }, err => console.error(err.code, error.message));
+        </script>
+        {% block body %}    
+            <ul>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'category' %}">Category</a></li>
+                <li><a href="{% url 'service' %}">Service</a></li>
+                <li style="float:right"><a class="active" href="{% url 'profile' %}"><img id="image" src="" width="20" height="20"></a></li>
+                <li style="float:right"><a class="active" href="{% url 'mycart' %}">My Cart</a></li>
+            </ul>
+        {% endblock %}
+
+        <img src="{% static 'images/wallpaper.jpg' %}" alt="wallpaper">
+
+    </body>
+</html>

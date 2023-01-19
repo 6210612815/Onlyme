@@ -1,0 +1,66 @@
+{% load static %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+        <title>
+            {% block title %} Profile {% endblock %}
+        </title>
+    </head>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://static.line-scdn.net/liff/edge/versions/2.9.0/sdk.js"></script>
+        <script>
+            liff.init({ liffId: "1657196715-wb3NDYPR" }, () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                }else{
+                    liff.getProfile().then(profile => {
+                        document.getElementById("image").src = profile.pictureUrl;
+                        document.getElementById("image_1").src = profile.pictureUrl;
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                    const accessToken = liff.getAccessToken();
+                    
+                    let data = {                    
+                        'access_token': accessToken,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "https://ba9c-124-122-222-45.ap.ngrok.io/profile/",
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            document.getElementById("fname").innerHTML = data.fname;
+                            document.getElementById("lname").innerHTML = data.lname;
+                            document.getElementById("sid").innerHTML = data.sid;
+                            document.getElementById("tel").innerHTML = data.tel;
+                            document.getElementById("email").innerHTML = data.email;
+                        }
+                    });
+                }
+            }, err => console.error(err.code, error.message));
+        </script>
+
+        <ul>
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+            <li><a href="{% url 'category' %}">Category</a></li>
+            <li><a href="{% url 'service' %}">Service</a></li>
+            <li style="float:right"><a class="active" href="{% url 'profile' %}"><img id="image" src="" width="20" height="20"></a></li>
+            <li style="float:right"><a class="active" href="{% url 'mycart' %}">My Cart</a></li>
+        </ul>
+        
+        <img id="image_1" src="" alt="avatar" class="img-1" style="width: 300px;">
+        <center>
+            <h4 class="title">First Name : </h4><h4 id="fname"></h4>
+            <h4 class="title">Last Name : <h4 id="lname"></h4></h4>
+            <h4 class="title">Student ID : <h4 id="sid"></h4></h4>
+            <h4 class="title">Telephone : <h4 id="tel"></h4></h4>
+            <h4 class="title">Email : <h4 id="email"></h4></h4>
+            <a class="submit" href="{% url 'editprofile' %}" >Edit</a>
+        </center>
+        
+    </body>
+</html>
