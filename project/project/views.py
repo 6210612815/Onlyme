@@ -2,13 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import status
 from database.models import Student, StudentForm
+from equipment.models import Equipment, EquipmentForm
 import requests, json, sys
 
 def index(request):
     return render(request, "index.html")
 
 def homepage(request):
-    return render(request, "homepage.html")
+    equipments = Equipment.objects.all()
+    return render(request, "homepage.html", {"equipments": equipments})
 
 def category(request):
     return render(request, "category.html")
@@ -21,6 +23,10 @@ def mycart(request):
 
 def editprofile(request):
     return render(request, "editprofile.html")
+
+def equipmentdetail(request, id):
+    equipment = Equipment.objects.get(id=id)
+    return render(request, "equipmentdetail.html", {'equipment': equipment})
 
 def profile(request):
     try :

@@ -35,12 +35,13 @@
             </ul>
         {% endblock %}
 
-        <img src="{% static 'images/wallpaper.jpg' %}" alt="wallpaper">
+        <p>{{ equipment.eid }}</p>
+        <p>{{ equipment.name }}</p>
+        <p>{{ equipment.desc }}</p>
+        <p>{{ equipment.image }}</p>
+        <p>{{ equipment.cat }}</p>
 
-        {% for i in equipments %}
-            <a href="{% url 'equipmentdetail' i.id %}">{{ i.image }}</a>
-            <br>
-        {% endfor %}
 
     </body>
 </html>
+

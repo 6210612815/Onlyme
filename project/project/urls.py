@@ -28,4 +28,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('editprofile/', views.editprofile, name='editprofile'),
     path('lineapi/', views.lineapi, name='lineapi'),
+    path('equipment/<int:id>/', views.equipmentdetail, name='equipmentdetail'),
 ]

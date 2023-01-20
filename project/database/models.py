@@ -17,11 +17,11 @@ class StudentForm(forms.ModelForm):
         model = Student
         fields = '__all__'
         labels = {
-            'userId' : 'userId',
-            'fname' : 'fname',
-            'lname' : 'lname',
-            'email' : 'email',
-            'sid' : 'sid',
-            'tel' : 'tel'
+            'userId' : 'User Id',
+            'fname' : 'First Name',
+            'lname' : 'Last Name',
+            'email' : 'Email',
+            'sid' : 'Student ID',
+            'tel' : 'Telephone'
         }
 
